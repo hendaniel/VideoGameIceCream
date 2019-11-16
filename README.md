@@ -129,7 +129,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 ### 7.Create a class for our main character (the icecream car)
 
 It class has the attributes of the position where the character is and the image that is going to be rendered in the canvas
-
+ `
 package co.devbeerloper.myicecreamgame;
 
 import android.content.Context;
@@ -219,9 +219,9 @@ public class IceCreamCar {
     }
 }
 
-
+ `
 ### 8. Add the surface created to the gameplay activity
-
+ `
 public class GamePlay extends AppCompatActivity {
 
     private GameSurfaceView gameSurfaceView;
@@ -249,11 +249,69 @@ public class GamePlay extends AppCompatActivity {
         gameSurfaceView.resume();
     }
 }
+ `
+
+### 9. Add the controls of the game in the GameSurfaceView
 
 
-### 9. Add the listener for the controller of the game
+ `
+ /**
+     * Detect the action of the touch event
+     * @param motionEvent
+     * @return
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_UP:
+                System.out.println("TOUCH UP - STOP JUMPING");
+                icecreamCar.setJumping(false);
+                break;
+            case MotionEvent.ACTION_DOWN:
+                System.out.println("TOUCH DOWN - JUMP");
+                icecreamCar.setJumping(true);
+                break;
+        }
+        return true;
+    }
 
 
+ `
+
+### 10. Implement the method updateInfo in the IcecreamCar class
+
+- Create the needed variables and constats 
+
+ /**
+     * Control the position and behaviour of the icecream car
+     */
+    public void updateInfo () {
+
+        if (isJumping) {
+            speed += 5;
+        } else {
+            speed -= 5;
+        }
+
+        if (speed > MAX_SPEED) {
+            speed = MAX_SPEED;
+        }
+        if (speed < MIN_SPEED) {
+            speed = MIN_SPEED;
+        }
+        this.positionY -= speed - GRAVITY_FORCE;
+
+        if (positionY < 0) {
+            positionY = 0;
+        }
+        if (positionY > maxY) {
+            positionY = maxY;
+        }
+
+
+
+
+    }
 
 ## Assets taken from
 CAR SPRITE:  www.lonegames.net https://opengameart.org/content/ice-cream-car
