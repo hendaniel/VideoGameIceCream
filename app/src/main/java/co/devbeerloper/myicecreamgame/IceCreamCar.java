@@ -12,33 +12,45 @@ public class IceCreamCar {
     public static final float INIT_Y =100;
     public static final int SPRITE_SIZE_WIDTH =600;
     public static final int SPRITE_SIZE_HEIGTH=500;
+    public static final float GRAVITY_FORCE=10;
+    private final int MIN_SPEED = 1;
+    private final int MAX_SPEED = 20;
 
+    private float maxY;
+    private float maxX;
 
     private float speed = 0;
     private float positionX;
     private float positionY;
     private Bitmap spriteIcecreamCar;
+    private boolean isJumping;
 
-    public IceCreamCar (Context context){
+
+    public IceCreamCar (Context context, float screenWidth, float screenHeigth){
 
         speed = 1;
         positionX = this.INIT_X;
         positionY = this.INIT_Y;
-
-        //Getting bitmap from drawable resource
+        isJumping = false;
+        //Getting bitmap from resource
         Bitmap originalBitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.icecreamcar);
         spriteIcecreamCar  = Bitmap.createScaledBitmap(originalBitmap, SPRITE_SIZE_WIDTH, SPRITE_SIZE_HEIGTH, false);
 
+        this.maxX = screenWidth - (spriteIcecreamCar.getWidth()/2);
+        this.maxY = screenHeigth - spriteIcecreamCar.getHeight();
     }
 
-    public IceCreamCar (Context context, float initialX, float initialY){
+    public IceCreamCar (Context context, float initialX, float initialY, float screenWidth, float screenHeigth){
 
         speed = 1;
         positionX = initialX;
         positionY = initialY;
 
-        //Getting bitmap from drawable resource
-        spriteIcecreamCar = BitmapFactory.decodeResource(context.getResources(), R.drawable.icecreamcar);
+        Bitmap originalBitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.icecreamcar);
+        spriteIcecreamCar  = Bitmap.createScaledBitmap(originalBitmap, SPRITE_SIZE_WIDTH, SPRITE_SIZE_HEIGTH, false);
+
+        this.maxX = screenWidth - (spriteIcecreamCar.getWidth()/2);
+        this.maxY = screenHeigth - spriteIcecreamCar.getHeight();
 
     }
 
@@ -80,5 +92,44 @@ public class IceCreamCar {
 
     public void setSpriteIcecreamCar(Bitmap spriteIcecreamCar) {
         this.spriteIcecreamCar = spriteIcecreamCar;
+    }
+
+    public boolean isJumping() {
+        return isJumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        isJumping = jumping;
+    }
+
+    /**
+     * Control the position and behaviour of the icecream car
+     */
+    public void updateInfo () {
+
+        if (isJumping) {
+            speed += 5;
+        } else {
+            speed -= 5;
+        }
+
+        if (speed > MAX_SPEED) {
+            speed = MAX_SPEED;
+        }
+        if (speed < MIN_SPEED) {
+            speed = MIN_SPEED;
+        }
+        this.positionY -= speed - GRAVITY_FORCE;
+
+        if (positionY < 0) {
+            positionY = 0;
+        }
+        if (positionY > maxY) {
+            positionY = maxY;
+        }
+
+
+
+
     }
 }

@@ -1,8 +1,11 @@
 package co.devbeerloper.myicecreamgame;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
+import android.view.MotionEvent;
 
 public class GamePlay extends AppCompatActivity {
 
@@ -12,8 +15,13 @@ public class GamePlay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_play);
+        // Force the screen to use the landscape orintation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        gameSurfaceView = new GameSurfaceView(this);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point screenSize = new Point();
+        display.getRealSize(screenSize);
+
+        gameSurfaceView = new GameSurfaceView(this, screenSize.x, screenSize.y);
         setContentView(gameSurfaceView);
 
     }
@@ -30,4 +38,7 @@ public class GamePlay extends AppCompatActivity {
         super.onResume();
         gameSurfaceView.resume();
     }
+
+
+
 }
