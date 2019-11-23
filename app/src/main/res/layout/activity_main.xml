@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:backgroundTint="@color/colorPrimaryDark"
     >
 
     <TextView
         android:id="@+id/tvGameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="THE ICE CREAM GAME"
+        android:text="THE DARK UNIVERSE"
         android:textAllCaps="false"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,12 +31,13 @@
         android:layout_marginRight="52dp"
         android:layout_marginBottom="78dp"
         android:adjustViewBounds="true"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:contentDescription="Image of the game"
         app:layout_constraintBottom_toTopOf="@+id/tvGameTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icecmenu" />
+        app:srcCompat="@drawable/icecreamcar" />
 
     <Button
         android:id="@+id/btnPlayGame"

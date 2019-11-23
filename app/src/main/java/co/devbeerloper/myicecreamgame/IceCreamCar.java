@@ -10,8 +10,8 @@ public class IceCreamCar {
 
     public static final float INIT_X =100;
     public static final float INIT_Y =100;
-    public static final int SPRITE_SIZE_WIDTH =600;
-    public static final int SPRITE_SIZE_HEIGTH=500;
+    public static  int SPRITE_SIZE_WIDTH =500;
+    public static  int SPRITE_SIZE_HEIGTH=400;
     public static final float GRAVITY_FORCE=10;
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
@@ -24,9 +24,15 @@ public class IceCreamCar {
     private float positionY;
     private Bitmap spriteIcecreamCar;
     private boolean isJumping;
+    private Context context;
+    private float screenWidth;
+    private float screenHeigth;
 
 
     public IceCreamCar (Context context, float screenWidth, float screenHeigth){
+        this.context = context;
+        this.screenWidth = screenWidth;
+        this.screenHeigth = screenHeigth;
 
         speed = 1;
         positionX = this.INIT_X;
@@ -107,6 +113,12 @@ public class IceCreamCar {
      */
     public void updateInfo () {
 
+
+        Bitmap originalBitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.icecreamcar);
+        spriteIcecreamCar  = Bitmap.createScaledBitmap(originalBitmap, SPRITE_SIZE_WIDTH, SPRITE_SIZE_HEIGTH, false);
+        this.maxX = screenWidth - (spriteIcecreamCar.getWidth()/2);
+        this.maxY = screenHeigth - spriteIcecreamCar.getHeight();
+
         if (isJumping) {
             speed += 5;
         } else {
@@ -127,9 +139,5 @@ public class IceCreamCar {
         if (positionY > maxY) {
             positionY = maxY;
         }
-
-
-
-
     }
 }
